@@ -126,6 +126,13 @@ module.exports = {
       if (interaction.customId === 'transfer_window_select') {
         const selected = interaction.values[0];
         const transferWindow = getTransferWindow();
+
+        if (selected === 'freeAgent') {
+          return interaction.reply({
+            content: '🔒 A abertura do Free Agency só pode ser alterada na configuração do bot pelo VS Code.',
+            flags: MessageFlags.Ephemeral
+          });
+        }
         
         setTransferWindow(selected, !transferWindow[selected]);
 
@@ -164,4 +171,3 @@ module.exports = {
     }
   },
 };
-
