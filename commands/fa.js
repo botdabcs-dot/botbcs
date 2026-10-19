@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
-const { ALLOWED_FA_CHANNELS, ALLOWED_TEAM_ROLES, FA_ANNOUNCEMENT_CHANNEL, ALLOWED_RELEASE_CHANNELS } = require('../config/constants');
-const { getTransferWindow } = require('../systems/transferWindow');
+const { ALLOWED_FA_CHANNELS, ALLOWED_TEAM_ROLES, FA_ANNOUNCEMENT_CHANNEL, ALLOWED_RELEASE_CHANNELS, FREE_AGENT_ENABLED } = require('../config/constants');
 
 async function getRobloxAvatarUrl(username) {
   const userResponse = await fetch('https://users.roblox.com/v1/usernames/users', {
@@ -45,8 +44,7 @@ module.exports = {
   async execute(interaction, client) {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-    const transferWindow = getTransferWindow();
-    if (!transferWindow.freeAgent) {
+    if (!FREE_AGENT_ENABLED) {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
