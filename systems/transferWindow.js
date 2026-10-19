@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const { FREE_AGENT_ENABLED } = require('../config/constants');
 
 const TRANSFER_WINDOW_FILE = path.join(__dirname, '../../transfer_window.json');
 
 let transferWindow = {
   clubs: false,
-  freeAgent: true
+  freeAgent: FREE_AGENT_ENABLED
 };
 
 function saveTransferWindow() {
@@ -20,7 +21,7 @@ function loadTransferWindow() {
   try {
     const data = JSON.parse(fs.readFileSync(TRANSFER_WINDOW_FILE, 'utf8'));
     transferWindow.clubs = data.clubs ?? false;
-    transferWindow.freeAgent = data.freeAgent ?? true;
+    transferWindow.freeAgent = FREE_AGENT_ENABLED;
     console.log(`📂 Janelas carregadas — Clubs: ${transferWindow.clubs ? '🟢 Aberta' : '🔴 Fechada'} | Free Agent: ${transferWindow.freeAgent ? '🟢 Aberta' : '🔴 Fechada'}`);
   } catch (err) {
     console.error('Erro ao carregar transfer window:', err);
